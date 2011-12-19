@@ -6,7 +6,7 @@ module GeoLocation
   @@timezones = {}
   @@countries = {}
 
-  [:use, :key, :dev, :dev_ip, :timezones, :countries].each do |sym|
+  [:use, :key, :dev, :dev_ip, :countries].each do |sym|
     class_eval <<-EOS, __FILE__, __LINE__
       def self.#{sym}
         if defined?(#{sym.to_s.upcase})
@@ -23,6 +23,6 @@ module GeoLocation
   end
   
   GeoLocation.build_countries
-  GeoLocation.build_timezones
+  #GeoLocation.build_timezones
   
 end
