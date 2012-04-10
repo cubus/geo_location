@@ -5,6 +5,7 @@ module GeoLocation
   
   class << self
     
+    
     def find(ip=nil)
       ip = GeoLocation::dev_ip unless GeoLocation::dev_ip.nil?
       return nil unless valid_ip(ip)
@@ -22,7 +23,7 @@ module GeoLocation
     
     def maxmind(ip)
       if GeoLocation::dev.nil? || GeoLocation::dev.empty?
-        url = "http://geoip3.maxmind.com/b?l=#{GeoLocation::key}&i=#{ip}"
+        url = GeoLocation::maxmind_url.yield(ip)
         uri = URI.parse(url)
         data_from_maxmind_http_response(ip, Net::HTTP.get_response(uri).body)
       else
@@ -58,7 +59,7 @@ module GeoLocation
     
     def hostip(ip)
       if GeoLocation::dev.nil? || GeoLocation::dev.empty?
-        url = "http://api.hostip.info/?ip=#{ip}"
+        url = GeoLocation::hostip_url.yield(ip)
         uri = URI.parse(url)      
         data_from_hostip_http_response(ip, Net::HTTP.get_response(uri).body)
       else
